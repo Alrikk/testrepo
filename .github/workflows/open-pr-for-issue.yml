@@ -1,0 +1,36 @@
+name: Auto PR from Issue
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  create-pr:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Stage changes for PR branch
+        run: |
+          mkdir -p issues
+          echo "# Work for issue #${{ github.event.issue.number }}: ${{ github.event.issue.title }}" > issues/${{ github.event.issue.number }}.md
+
+      - name: Open Pull Request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: issue-${{ github.event.issue.number }}
+          base: main
+          title: "WIP: #${{ github.event.issue.number }} - ${{ github.event.issue.title }}"
+          body: |
+            Draft PR created automatically from issue #${{ github.event.issue.number }}.
+
+            References: #${{ github.event.issue.number }}
+          draft: true
+          author: James <action@users.noreply.github.com>
