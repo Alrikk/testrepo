@@ -19,8 +19,8 @@ jobs:
 
       - name: Stage changes for PR branch
         run: |
-          mkdir -p issues
-          echo "# Work for issue #${{ github.event.issue.number }}: ${{ github.event.issue.title }}" > issues/${{ github.event.issue.number }}.md
+          mkdir -p .github/issue-prs
+          echo "# Work for issue #${{ github.event.issue.number }}: ${{ github.event.issue.title }}" > .github/issue-prs/issue-${{ github.event.issue.number }}.md
 
       - name: Open Pull Request
         uses: peter-evans/create-pull-request@v7
@@ -33,4 +33,3 @@ jobs:
 
             References: #${{ github.event.issue.number }}
           draft: true
-          author: James <action@users.noreply.github.com>
