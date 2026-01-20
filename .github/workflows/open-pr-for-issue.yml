@@ -27,9 +27,7 @@ jobs:
         with:
           branch: issue-${{ github.event.issue.number }}
           base: main
-          title: "WIP: #${{ github.event.issue.number }} - ${{ github.event.issue.title }}"
+          title: "#${{ github.event.issue.number }} - ${{ github.event.issue.title }}"
           body: |
-            Draft PR created automatically from issue #${{ github.event.issue.number }}.
-
-            References: #${{ github.event.issue.number }}
+            References #${{ github.event.issue.number }}.
           draft: true
